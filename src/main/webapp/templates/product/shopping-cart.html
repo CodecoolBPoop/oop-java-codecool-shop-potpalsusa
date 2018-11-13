@@ -31,39 +31,31 @@
 
 <div class="jumbotron text-center">
     <h1>Codecool Shop</h1>
-    <a href="/shopping-cart">Shopping Cart</a>
 </div>
 
 <div class="container">
-    <div class="well well-sm">
-        <strong th:text="${category.name}">Category Title</strong>
-    </div>
-    <div id="products" class="row list-group">
 
-        <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${products}">
-<!--            <strong th:text="${iterStat}"></strong>
-            <br>
-            <strong th:text="${prod}"></strong>-->
-            <div class="thumbnail">
-                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
-                <div class="caption">
-                    <h4 class="group inner list-group-item-heading" th:text="${prod.name}">Product name</h4>
-                    <p class="group inner list-group-item-text" th:text="${prod.description}">Product description... </p>
-                    <div class="row">
-                        <div class="col-xs-12 col-md-6">
-                            <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
-                        </div>
-                        <div class="col-xs-12 col-md-6">
-                            <form action="/">
-                                <input type="hidden" name="item" th:attr="value=${prod.id}">
-                                <input type="submit" name="add" value="Add to cart" class="btn btn-success">
-                            </form>
-                        </div>
-                    </div>
-                </div>
+        <table  width="80%">
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Piece</th>
+            </tr>
+            <div th:each="prod : ${cart}">
+                <tr>
+                    <td>
+                        <div th:text="${prod.key.getName()}">Product Name</div>
+                    </td>
+                    <td>
+                        <div th:text="${prod.key.getDefaultPrice()} + ' USD'">100 USD</div>
+                    </td>
+                    <td>
+                        <div th:text="'Piece: ' + ${prod.value}"></div>
+                    </td>
+                </tr>
             </div>
-        </div>
-    </div>
+        </table>
+    <h2 th:text="${total} + ' USD'"></h2>
 
 </div>
 

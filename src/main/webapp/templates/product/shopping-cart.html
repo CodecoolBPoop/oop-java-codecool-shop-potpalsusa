@@ -42,17 +42,17 @@
                 <th>Piece</th>
             </tr>
             <div th:each="prod : ${cart}">
-            <tr>
-                <td>
-                    <div th:text="${prod.key.getName()}">Product Name</div>
-                </td>
-                <td>
-                    <div th:text="${prod.key.getDefaultPrice()} + ' USD'">100 USD</div>
-                </td>
-                <td>
-                    <div th:text="'Piece: ' + ${prod.value}"></div>
-                </td>
-            </tr>
+                <tr>
+                    <td>
+                        <div th:text="${prod.key.getName()}">Product Name</div>
+                    </td>
+                    <td>
+                        <div th:text="${prod.key.getDefaultPrice()} + ' USD'">100 USD</div>
+                    </td>
+                    <td>
+                        <div th:text="'Piece: ' + ${prod.value}"></div>
+                    </td>
+                </tr>
             </div>
         </table>
     <h2 th:text="${total} + ' USD'"></h2>

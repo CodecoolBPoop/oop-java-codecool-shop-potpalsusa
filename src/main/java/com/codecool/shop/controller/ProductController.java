@@ -10,6 +10,7 @@ import org.thymeleaf.context.WebContext;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,9 +30,28 @@ public class ProductController extends HttpServlet {
 //        params.put("category", productCategoryDataStore.find(1));
 //        params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
 
+        String add = req.getParameter("add");
+
+
+        if(add != null){
+            Cookie item = new Cookie(req.getParameter("item"), "1");
+            Cookie clientCookies[] = req.getCookies();
+            for (Cookie cookie: clientCookies) {
+                if(req.getParameter("item").equals(cookie.getName())){
+                    cookie.setValue(String.valueOf(Integer.parseInt(cookie.getValue())+1));
+                    break;
+                }
+            }
+
+            resp.addCookie(item);
+            resp.sendRedirect("/");
+        }
+        Cookie clientCookies[] = req.getCookies();
+
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 //        context.setVariables(params);
+        context.setVariable("cookies", clientCookies);
         context.setVariable("recipient", "World");
         context.setVariable("category", productCategoryDataStore.find(1));
         context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(1)));

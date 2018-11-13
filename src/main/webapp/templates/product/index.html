@@ -38,17 +38,12 @@
     <div class="well well-sm">
         <strong th:text="${category.name}">Category Title</strong>
     </div>
-    <div th:each="cookie : ${cookies}">
-        <p th:text="${cookie.getName()}"></p>
-        <p th:text="${cookie.getValue()}"></p>
-    </div>
-
     <div id="products" class="row list-group">
 
         <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${products}">
-            <strong th:text="${iterStat}"></strong>
+<!--            <strong th:text="${iterStat}"></strong>
             <br>
-            <strong th:text="${prod}"></strong>
+            <strong th:text="${prod}"></strong>-->
             <div class="thumbnail">
                 <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
                 <div class="caption">

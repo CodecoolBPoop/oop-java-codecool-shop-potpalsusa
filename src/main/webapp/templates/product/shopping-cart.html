@@ -34,27 +34,27 @@
 </div>
 
 <div class="container">
-    <div th:each="cookie : ${cookies}">
-        <p th:text="${cookie.getName()}"></p>
-        <p th:text="${cookie.getValue()}"></p>
-    </div>
 
-    <div id="products" class="row list-group">
-
-        <div class="item col-xs-4 col-lg-4" th:each="prod : ${cart}">
-            <div class="thumbnail">
-                <div class="caption">
-                    <h4 class="group inner list-group-item-heading" th:text="${prod.key.getName()}">Product name</h4>
-                    <div class="row">
-                        <div class="col-xs-12 col-md-6">
-                            <p class="lead" th:text="${prod.key.getDefaultPrice()} + ' USD'">100 USD</p>
-                            <h5 th:text="'Piece: ' + ${prod.value}" ></h5>
-                        </div>
-                    </div>
-                </div>
+        <table  width="80%">
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Piece</th>
+            </tr>
+            <div th:each="prod : ${cart}">
+            <tr>
+                <td>
+                    <div th:text="${prod.key.getName()}">Product Name</div>
+                </td>
+                <td>
+                    <div th:text="${prod.key.getDefaultPrice()} + ' USD'">100 USD</div>
+                </td>
+                <td>
+                    <div th:text="'Piece: ' + ${prod.value}"></div>
+                </td>
+            </tr>
             </div>
-        </div>
-    </div>
+        </table>
     <h2 th:text="${total} + ' USD'"></h2>
 
 </div>

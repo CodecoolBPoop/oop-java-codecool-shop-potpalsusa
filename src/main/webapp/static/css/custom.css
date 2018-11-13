@@ -60,3 +60,11 @@
 {
     margin: 0 0 11px;
 }
+.fa {
+    color: #428bca;
+}
+.shopping-cart-button {
+    padding: 0;
+    border: none;
+    background: none;
+}

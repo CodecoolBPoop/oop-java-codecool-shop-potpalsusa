@@ -34,18 +34,24 @@ public class ProductController extends HttpServlet {
 
 
         if(add != null){
-            Cookie item = new Cookie(req.getParameter("item"), "1");
             Cookie clientCookies[] = req.getCookies();
-            for (Cookie cookie: clientCookies) {
-                if(req.getParameter("item").equals(cookie.getName())){
-                    cookie.setValue(String.valueOf(Integer.parseInt(cookie.getValue())+1));
-                    break;
+            String itemId = req.getParameter("item");
+            if(itemInCart(itemId , clientCookies)){
+                for (Cookie cookie: clientCookies) {
+                    if(itemId.equals(cookie.getName())){
+                        cookie.setValue(String.valueOf(Integer.parseInt(cookie.getValue())+1));
+                        resp.addCookie(cookie);
+                        System.out.println(cookie.getValue());
+                        break;
+                    }
                 }
+            } else {
+                Cookie item = new Cookie(req.getParameter("item"), "1");
+                resp.addCookie(item);
             }
-
-            resp.addCookie(item);
             resp.sendRedirect("/");
         }
+
         Cookie clientCookies[] = req.getCookies();
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
@@ -56,6 +62,18 @@ public class ProductController extends HttpServlet {
         context.setVariable("category", productCategoryDataStore.find(1));
         context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(1)));
         engine.process("product/index.html", context, resp.getWriter());
+    }
+
+
+    private boolean itemInCart(String id, Cookie clientCookies[]){
+        boolean itemInCart = false;
+        for (Cookie cookie: clientCookies) {
+            if(id.equals(cookie.getName())){
+                itemInCart = true;
+                break;
+            }
+        }
+        return  itemInCart;
     }
 
 }

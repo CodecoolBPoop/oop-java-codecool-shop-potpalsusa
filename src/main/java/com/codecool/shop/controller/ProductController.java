@@ -29,14 +29,9 @@ public class ProductController extends HttpServlet {
 //        Map params = new HashMap<>();
 //        params.put("category", productCategoryDataStore.find(1));
 //        params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
-
-        int itemNum = 0;
         Cookie clientCookies[] = req.getCookies();
-        for(Cookie cookie : clientCookies){
-            if(cookie.getName().length() == 1){
-                itemNum += Integer.parseInt(cookie.getValue());
-            }
-        }
+
+        int itemNum = numberOfItemsInCart(clientCookies);
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
@@ -54,10 +49,11 @@ public class ProductController extends HttpServlet {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
 
+        Cookie clientCookies[] = req.getCookies();
+
         String item = req.getParameter("itemId");
 
         if(item != null){
-            Cookie clientCookies[] = req.getCookies();
             String itemId = req.getParameter("itemId");
             if(itemInCart(itemId , clientCookies)){
                 for (Cookie cookie: clientCookies) {
@@ -75,13 +71,7 @@ public class ProductController extends HttpServlet {
             }
         }
 
-        int itemNum = 0;
-        Cookie clientCookies[] = req.getCookies();
-        for(Cookie cookie : clientCookies){
-            if(cookie.getName().length() == 1){
-                itemNum += Integer.parseInt(cookie.getValue());
-            }
-        }
+        int itemNum = numberOfItemsInCart(clientCookies);
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
@@ -103,6 +93,16 @@ public class ProductController extends HttpServlet {
             }
         }
         return  itemInCart;
+    }
+
+    private int numberOfItemsInCart(Cookie clientCookies[]){
+        int itemNum = 0;
+        for(Cookie cookie : clientCookies){
+            if(cookie.getName().length() == 1){
+                itemNum += Integer.parseInt(cookie.getValue());
+            }
+        }
+        return itemNum;
     }
 
 }

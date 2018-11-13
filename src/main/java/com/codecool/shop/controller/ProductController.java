@@ -40,6 +40,7 @@ public class ProductController extends HttpServlet {
                 for (Cookie cookie: clientCookies) {
                     if(itemId.equals(cookie.getName())){
                         cookie.setValue(String.valueOf(Integer.parseInt(cookie.getValue())+1));
+                        cookie.setMaxAge(60 * 60 * 3);
                         resp.addCookie(cookie);
                         System.out.println(cookie.getValue());
                         break;
@@ -47,6 +48,7 @@ public class ProductController extends HttpServlet {
                 }
             } else {
                 Cookie item = new Cookie(req.getParameter("item"), "1");
+                item.setMaxAge(60 * 60 * 3);
                 resp.addCookie(item);
             }
             resp.sendRedirect("/");

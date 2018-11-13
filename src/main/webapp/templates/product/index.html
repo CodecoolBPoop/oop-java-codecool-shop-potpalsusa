@@ -24,6 +24,8 @@
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
 
+    <script type="text/javascript" th:src="@{/static/js/the_js.js}" defer></script>
+
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
 </head>
 
@@ -31,7 +33,7 @@
 
 <div class="jumbotron text-center">
     <h1>Codecool Shop</h1>
-    <a href="/shopping-cart">Shopping Cart</a>
+    <a href="/shopping-cart" id="cart" th:attr="name=${numOfItems}" th:text="${numOfItems}">Shopping Cart</a>
 </div>
 
 <div class="container">
@@ -54,10 +56,7 @@
                             <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                         </div>
                         <div class="col-xs-12 col-md-6">
-                            <form action="/">
-                                <input type="hidden" name="item" th:attr="value=${prod.id}">
-                                <input type="submit" name="add" value="Add to cart" class="btn btn-success">
-                            </form>
+                            <input type="button" th:attr="name=${prod.id}" value="Add to cart" class="add btn btn-success">
                         </div>
                     </div>
                 </div>

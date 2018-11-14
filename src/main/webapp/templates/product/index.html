@@ -60,12 +60,13 @@
         </form>
 
 
-        <form   id= "suppForm" action="/"  >
-        <h4>SUPPLIER</h4>
-        <select name="supplier" >
-            <option class="select" th:each= "supp,iterStat : ${supplier}" th:text="${supp.name}" th:value="${supp.id}"
-                   ></option>
-        </select>
+        <form id="suppForm" action="/">
+            <strong>Supplier</strong>
+            <select name="supplier">
+                <option class="select" th:each="supp,iterStat : ${supplier}" th:text="${supp.name}"
+                        th:value="${supp.id}"
+                ></option>
+            </select>
             <input type="submit" value="submit">
 
         </form>

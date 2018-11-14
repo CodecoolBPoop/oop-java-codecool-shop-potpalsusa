@@ -36,9 +36,13 @@
 <div class="container">
     <div class="well well-sm">
         <strong>Category:</strong>
-        <select>
-            <option th:each="category,iterStat : ${categories}" th:text="${category.getName()}"></option>
-        </select>
+        <form action="/">
+            <select onchange="this.form.submit()">
+                <option th:each=" category,iterStat : ${categories}" th:text="${category.getName()}"></option>
+            </select>
+            <button type="submit" name="categoryName" th:value="${category.getName()}"></button>
+        </form>
+
     </div>
 
     <div id="products" class="row list-group">

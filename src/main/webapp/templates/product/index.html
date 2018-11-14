@@ -45,9 +45,19 @@
     </div>
 </div>
 
+<div th:replace="footer.html :: copy"></div>
+
 <div class="container">
     <div class="well well-sm">
-        <strong th:text="${category.name}">Category Title</strong>
+        <form   id= "suppForm" action="/"  >
+        <h4>SUPPLIER</h4>
+        <select name="supplier" >
+            <option class="select" th:each= "supp,iterStat : ${supplier}" th:text="${supp.name}" th:value="${supp.id}"
+                   ></option>
+        </select>
+            <input type="submit" value="submit">
+
+        </form>
     </div>
     <div id="products" class="row list-group">
 
@@ -71,8 +81,6 @@
     </div>
 
 </div>
-
-<div th:replace="footer.html :: copy"></div>
 
 </body>
 </html>

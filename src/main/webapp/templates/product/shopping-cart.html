@@ -43,15 +43,15 @@
 
     <div id="products" class="row list-group">
 
-        <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${products}">
+        <div class="item col-xs-4 col-lg-4" th:each="prod : ${cart}">
             <div class="thumbnail">
                 <div class="caption">
-                    <h4 class="group inner list-group-item-heading" th:text="${prod.name}">Product name</h4>
+                    <h4 class="group inner list-group-item-heading" th:text="${prod.key.getName()}">Product name</h4>
                     <p class="group inner list-group-item-text" th:text="${prod.description}">Product description... </p>
                     <div class="row">
                         <form action="/shopping-cart">
                             <div class="col-xs-12 col-md-6">
-                                Quantity: <input type="text" name="quantity" value="" size="6">
+                                Quantity: <input type="text" name="quantity" value="" size="6" th:text="${prod.value}">
                             </div>
                             <div class="col-xs-12 col-md-6">
                                 <input class="btn btn-primary" id="center" type="submit" value="Update my cart!">
@@ -61,11 +61,10 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-md-6">
-                            <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+                            <p class="lead" th:text="${prod.key.getDefaultPrice()} + ' USD'">100 USD</p>
                         </div>
                         <div class="col-xs-12 col-md-6">
-                            <!--TODO: add value to remove button-->
-                            <form action="#"><button class="btn btn-danger" type=\"submit\" name=\"removefromcart\" value=\"">Remove from cart</button></form>
+                            <button class="btn btn-danger" type="submit" name="removefromcart" value="">Remove from cart</button>
                         </div>
                     </div>
                 </div>
@@ -74,10 +73,8 @@
     </div>
 
     <div class="well well-sm">
-        <!--TODO: call total function-->
-        <strong>Total: </strong>
-        <!--TODO: merge URL-usages -->
-        <span class="rightside"><a href="/payment"><button class="btn btn-success" th:align="right" >Payment</button></a></span>
+        <strong>Total: th:text="${total} + ' USD'"</strong>
+        <span class="rightside"><a href="/checkout"><button class="btn btn-success" th:align="right" >Checkout</button></a></span>
     </div>
 
 

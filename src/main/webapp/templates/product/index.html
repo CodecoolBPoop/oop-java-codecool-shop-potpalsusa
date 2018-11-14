@@ -49,13 +49,13 @@
 
 <div class="container">
     <div class="well well-sm">
-        <form   id= "myForm" action="#" th:action="@{/suppliers.html}"   method='GET' >
+        <form   id= "suppForm" action="/"  >
         <h4>SUPPLIER</h4>
-        <select >
-            <option th:each= "supp,iterStat : ${supplier}" th:text="${supp.name}" th:value="${supp.id}" ></option>
+        <select name="supplier" >
+            <option class="select" th:each= "supp,iterStat : ${supplier}" th:text="${supp.name}" th:value="${supp.id}"
+                   ></option>
         </select>
-
-            <input name = "submit" type="submit" value="Submit">
+            <input type="submit" value="submit">
 
         </form>
     </div>

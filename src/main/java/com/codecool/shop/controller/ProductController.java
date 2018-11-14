@@ -39,6 +39,12 @@ public class ProductController extends HttpServlet {
         Cookie clientCookies[] = req.getCookies();
 
         int itemNum = numberOfItemsInCart(clientCookies);
+        String supplierId = req.getParameter("supplier");
+        if (supplierId!=null){
+            params.put("products", productDataStore.getBy(supplierDataStore.find(Integer.parseInt(supplierId))));
+        }
+
+        System.out.println(supplierId);
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());

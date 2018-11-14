@@ -48,7 +48,7 @@ public class ProductController extends HttpServlet {
 
         int itemNum = numberOfItemsInCart(clientCookies);
         String supplierId = req.getParameter("supplier");
-        if (supplierId!=null){
+        if (supplierId != null) {
             params.put("products", productDataStore.getBy(supplierDataStore.find(Integer.parseInt(supplierId))));
         }
 
@@ -114,9 +114,7 @@ public class ProductController extends HttpServlet {
 
     private boolean itemInCart(String id, Cookie clientCookies[]) {
         boolean itemInCart = false;
-        if(clientCookies == null) return itemInCart;
-        for (Cookie cookie: clientCookies) {
-            if(id.equals(cookie.getName())){
+        if (clientCookies == null) return itemInCart;
         for (Cookie cookie : clientCookies) {
             if (id.equals(cookie.getName())) {
                 itemInCart = true;

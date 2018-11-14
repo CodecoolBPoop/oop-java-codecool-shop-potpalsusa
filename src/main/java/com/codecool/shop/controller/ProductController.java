@@ -34,6 +34,14 @@ public class ProductController extends HttpServlet {
 
         Cookie clientCookies[] = req.getCookies();
 
+        String itemCategory = req.getParameter("productCategory");
+        if (itemCategory != null) {
+            params.put("products",
+                    productDataStore.getBy(productCategoryDataStore.find(Integer.parseInt(itemCategory))));
+            System.out.println(itemCategory);
+        }
+
+
         int itemNum = numberOfItemsInCart(clientCookies);
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
@@ -56,12 +64,12 @@ public class ProductController extends HttpServlet {
 
         String item = req.getParameter("itemId");
 
-        if(item != null){
+        if (item != null) {
             String itemId = req.getParameter("itemId");
-            if(itemInCart(itemId , clientCookies)){
-                for (Cookie cookie: clientCookies) {
-                    if(itemId.equals(cookie.getName())){
-                        cookie.setValue(String.valueOf(Integer.parseInt(cookie.getValue())+1));
+            if (itemInCart(itemId, clientCookies)) {
+                for (Cookie cookie : clientCookies) {
+                    if (itemId.equals(cookie.getName())) {
+                        cookie.setValue(String.valueOf(Integer.parseInt(cookie.getValue()) + 1));
                         cookie.setMaxAge(60 * 60 * 3);
                         resp.addCookie(cookie);
                         break;
@@ -81,29 +89,29 @@ public class ProductController extends HttpServlet {
 //        context.setVariables(params);
         context.setVariable("recipient", "World");
         context.setVariable("numOfItems", itemNum);
-        context.setVariable("category", productCategoryDataStore.find(1));
+        context.setVariable("category", productCategoryDataStore.getAll());
         context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(1)));
         context.setVariable("categories", productCategoryDataStore.getAll());
         engine.process("product/index.html", context, resp.getWriter());
 
     }
 
-    private boolean itemInCart(String id, Cookie clientCookies[]){
+    private boolean itemInCart(String id, Cookie clientCookies[]) {
         boolean itemInCart = false;
-        for (Cookie cookie: clientCookies) {
-            if(id.equals(cookie.getName())){
+        for (Cookie cookie : clientCookies) {
+            if (id.equals(cookie.getName())) {
                 itemInCart = true;
                 break;
             }
         }
-        return  itemInCart;
+        return itemInCart;
     }
 
-    private int numberOfItemsInCart(Cookie clientCookies[]){
+    private int numberOfItemsInCart(Cookie clientCookies[]) {
         int itemNum = 0;
-        if(clientCookies == null) return itemNum;
-        for(Cookie cookie : clientCookies){
-            if(cookie.getName().length() <= 3){
+        if (clientCookies == null) return itemNum;
+        for (Cookie cookie : clientCookies) {
+            if (cookie.getName().length() <= 3) {
                 itemNum += Integer.parseInt(cookie.getValue());
             }
         }

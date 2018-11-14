@@ -94,7 +94,6 @@ public class ProductController extends HttpServlet {
         int itemNum = numberOfItemsInCart(clientCookies);
 
         String supplier = req.getParameter("myForm");
-        System.out.println(supplier);
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());

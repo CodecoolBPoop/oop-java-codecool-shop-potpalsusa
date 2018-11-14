@@ -27,6 +27,7 @@
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
 
+    <script type="text/javascript" th:src="@{/static/js/the_js.js}" defer></script>
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
 </head>
 
@@ -39,13 +40,14 @@
 </div>
 
 <div class="container">
+    <a href="/">Home</a>
     <div class="well well-sm">
         <strong>The content of your cart:</strong>
     </div>
 
     <div id="products" class="row list-group">
 
-        <div class="item col-xs-4 col-lg-4" th:each="prod : ${cart}">
+        <div class="item col-xs-4 col-lg-4" th:each="prod : ${cart}" th:attr="id='item'+${prod.key.getId()}">
             <div class="thumbnail">
                 <div class="caption">
                     <h4 class="group inner list-group-item-heading" th:text="${prod.key.getName()}">Product name</h4>
@@ -53,20 +55,20 @@
                     <div class="row">
                         <form action="/shopping-cart">
                             <div class="col-xs-12 col-md-6">
-                                Quantity: <input type="text" name="quantity" th:attr="value=${prod.value}" size="3" >
+                                Quantity: <input type="text" th:attr="id=${prod.key.getId()} , value=${prod.value}" name="quantity"  size="3" >
                             </div>
                             <div class="col-xs-12 col-md-6">
-                                <input class="btn btn-primary" id="center" type="submit" value="Update my cart!">
+                                <input class="update btn btn-primary" th:attr="name=${prod.key.getId()}" type="button" value="Update my cart!">
                                 <p></p>
                             </div>
                         </form>
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-md-6">
-                            <p class="lead" th:text="${prod.key.getDefaultPrice()} + ' USD'">100 USD</p>
+                            <p class="price lead" th:attr="name=${prod.key.getId()}, value=${prod.key.getDefaultPrice()}" th:text="${prod.key.getDefaultPrice()} + ' USD'">100 USD</p>
                         </div>
                         <div class="col-xs-12 col-md-6">
-                            <button class="btn btn-danger" type="submit" name="removefromcart" value="">Remove from cart</button>
+                            <button class="remove btn btn-danger" type="button" th:attr="name=${prod.key.getId()}" value="">Remove from cart</button>
                         </div>
                     </div>
                 </div>
@@ -75,7 +77,7 @@
     </div>
 
     <div class="well well-sm">
-        <strong th:text="'Total: ' + ${total} + ' USD'"></strong>
+        <strong id="total" th:text="'Total: ' + ${total} + ' USD'"></strong>
         <span class="rightside"><a href="/checkout"><button class="btn btn-success" th:align="right" >Checkout</button></a></span>
     </div>
 

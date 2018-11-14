@@ -42,17 +42,15 @@ public class ProductController extends HttpServlet {
         if (itemCategory != null) {
             params.put("products",
                     productDataStore.getBy(productCategoryDataStore.find(Integer.parseInt(itemCategory))));
-            System.out.println(itemCategory);
         }
 
 
         int itemNum = numberOfItemsInCart(clientCookies);
         String supplierId = req.getParameter("supplier");
-        if (supplierId!=null){
+        if (supplierId != null){
             params.put("products", productDataStore.getBy(supplierDataStore.find(Integer.parseInt(supplierId))));
         }
 
-        System.out.println(supplierId);
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
@@ -60,8 +58,6 @@ public class ProductController extends HttpServlet {
         context.setVariable("numOfItems", itemNum);
         context.setVariable("recipient", "World");
         context.setVariable("supplier", supplierDataStore.getAll());
-        //context.setVariable("category", productCategoryDataStore.find(1));
-        //context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(1)));
         engine.process("product/index.html", context, resp.getWriter());
     }
 
@@ -96,7 +92,6 @@ public class ProductController extends HttpServlet {
         int itemNum = numberOfItemsInCart(clientCookies);
 
         String supplier = req.getParameter("myForm");
-        System.out.println(supplier);
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
@@ -115,8 +110,6 @@ public class ProductController extends HttpServlet {
     private boolean itemInCart(String id, Cookie clientCookies[]) {
         boolean itemInCart = false;
         if(clientCookies == null) return itemInCart;
-        for (Cookie cookie: clientCookies) {
-            if(id.equals(cookie.getName())){
         for (Cookie cookie : clientCookies) {
             if (id.equals(cookie.getName())) {
                 itemInCart = true;

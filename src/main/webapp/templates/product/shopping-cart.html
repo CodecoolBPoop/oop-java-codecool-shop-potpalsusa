@@ -50,7 +50,7 @@
                         <div th:text="${prod.key.getDefaultPrice()} + ' USD'">100 USD</div>
                     </td>
                     <td>
-                        <div th:text="'Piece: ' + ${prod.value}"></div>
+                        <div th:text="${prod.value}"></div>
                     </td>
                 </tr>
             </div>

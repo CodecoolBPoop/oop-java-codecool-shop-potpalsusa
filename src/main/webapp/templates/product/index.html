@@ -1,15 +1,15 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8" />
-    <meta name="author" content="Codecool" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8"/>
+    <meta name="author" content="Codecool"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <title>Codecool Shop</title>
     <!-- Font Awesome Icon -->
-<!--
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
--->
+    <!--
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
     <!-- Latest compiled and minified Jquery -->
@@ -18,11 +18,11 @@
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
 
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" />
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"/>
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
@@ -31,7 +31,7 @@
 
     <script type="text/javascript" th:src="@{/static/js/the_js.js}" defer></script>
 
-    <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css"/>
 </head>
 
 <body>
@@ -39,7 +39,7 @@
 <div class="jumbotron text-center">
     <h1>Codecool Shop</h1>
     <div class="shopping-cart-button">
-        <a href="/shopping-cart" ><i class="fa fa-shopping-cart fa-3x"></i></a>
+        <a href="/shopping-cart"><i class="fa fa-shopping-cart fa-3x"></i></a>
         <p id="cart" th:attr="name=${numOfItems}" th:text="${numOfItems}"></p>
 
     </div>
@@ -49,10 +49,11 @@
     <div class="well well-sm">
         <strong>Category:</strong>
         <form action="/">
-            <select onchange="this.form.submit()">
-                <option th:each=" category,iterStat : ${categories}" th:text="${category.getName()}"></option>
+            <select name="productCategory">
+                <option th:each=" category,iterStat : ${category}" th:name="category" th:text="${category.name}"
+                        class="categorySelection" th:value="${category.id}"></option>
             </select>
-            <button type="submit" name="categoryName" th:value="${category.getName()}"></button>
+            <input type="submit" value="submit"></input>
         </form>
 
     </div>
@@ -71,7 +72,8 @@
                             <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                         </div>
                         <div class="col-xs-12 col-md-6">
-                            <input type="button" th:attr="name=${prod.id}" value="Add to cart" class="add btn btn-success">
+                            <input type="button" th:attr="name=${prod.id}" value="Add to cart"
+                                   class="add btn btn-success">
                         </div>
                     </div>
                 </div>

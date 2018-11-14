@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Codecool Shop</title>
+    <!-- Font Awesome Icon -->
+<!--
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
     <!-- Latest compiled and minified Jquery -->
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"
@@ -33,7 +38,11 @@
 
 <div class="jumbotron text-center">
     <h1>Codecool Shop</h1>
-    <a href="/shopping-cart" id="cart" th:attr="name=${numOfItems}" th:text="${numOfItems}">Shopping Cart</a>
+    <div class="shopping-cart-button">
+        <a href="/shopping-cart" ><i class="fa fa-shopping-cart fa-3x"></i></a>
+        <p id="cart" th:attr="name=${numOfItems}" th:text="${numOfItems}"></p>
+
+    </div>
 </div>
 
 <div class="container">

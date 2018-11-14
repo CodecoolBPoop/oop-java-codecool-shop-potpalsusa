@@ -5,7 +5,10 @@
     <meta name="author" content="Codecool" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Codecool Shop</title>
+    <title>Codecool Shop - Cart</title>
+    <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
 
     <!-- Latest compiled and minified Jquery -->
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"
@@ -31,31 +34,53 @@
 
 <div class="jumbotron text-center">
     <h1>Codecool Shop</h1>
+
+    <h2>Your cart</h2>
 </div>
 
 <div class="container">
+    <div class="well well-sm">
+        <strong>The content of your cart:</strong>
+    </div>
 
-        <table  width="80%">
-            <tr>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Piece</th>
-            </tr>
-            <div th:each="prod : ${cart}">
-                <tr>
-                    <td>
-                        <div th:text="${prod.key.getName()}">Product Name</div>
-                    </td>
-                    <td>
-                        <div th:text="${prod.key.getDefaultPrice()} + ' USD'">100 USD</div>
-                    </td>
-                    <td>
-                        <div th:text="${prod.value}"></div>
-                    </td>
-                </tr>
+    <div id="products" class="row list-group">
+
+        <div class="item col-xs-4 col-lg-4" th:each="prod : ${cart}">
+            <div class="thumbnail">
+                <div class="caption">
+                    <h4 class="group inner list-group-item-heading" th:text="${prod.key.getName()}">Product name</h4>
+                    <p class="group inner list-group-item-text" th:text="${prod.key.getDescription()}">Product description... </p>
+                    <div class="row">
+                        <form action="/shopping-cart">
+                            <div class="col-xs-12 col-md-6">
+                                Quantity: <input type="text" name="quantity" th:attr="value=${prod.value}" size="3" >
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <input class="btn btn-primary" id="center" type="submit" value="Update my cart!">
+                                <p></p>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <p class="lead" th:text="${prod.key.getDefaultPrice()} + ' USD'">100 USD</p>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <button class="btn btn-danger" type="submit" name="removefromcart" value="">Remove from cart</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </table>
-    <h2 th:text="${total} + ' USD'"></h2>
+        </div>
+    </div>
+
+    <div class="well well-sm">
+        <strong th:text="'Total: ' + ${total} + ' USD'"></strong>
+        <span class="rightside"><a href="/checkout"><button class="btn btn-success" th:align="right" >Checkout</button></a></span>
+    </div>
+
+
+
 
 </div>
 

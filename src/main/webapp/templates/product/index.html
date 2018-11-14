@@ -33,9 +33,19 @@
     <h1>Codecool Shop</h1>
 </div>
 
+<div th:replace="footer.html :: copy"></div>
+
 <div class="container">
     <div class="well well-sm">
-        <strong th:text="${category.name}">Category Title</strong>
+        <form   id= "myForm" action="#" th:action="@{/suppliers.html}"   method='GET' >
+        <h4>SUPPLIER</h4>
+        <select >
+            <option th:each= "supp,iterStat : ${supplier}" th:text="${supp.name}" th:value="${supp.id}" ></option>
+        </select>
+
+            <input name = "submit" type="submit" value="Submit">
+
+        </form>
     </div>
 
     <div id="products" class="row list-group">
@@ -60,8 +70,6 @@
     </div>
 
 </div>
-
-<div th:replace="footer.html :: copy"></div>
 
 </body>
 </html>

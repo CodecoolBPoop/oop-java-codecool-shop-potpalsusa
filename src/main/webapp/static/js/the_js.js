@@ -7,16 +7,15 @@ function main() {
         for (let button of addButtons) {
             button.addEventListener("click", function () {
                 let productId = button.getAttribute("name");
-                let params = {itemId : productId};
+                let params = {itemId: productId};
                 $.post('/', $.param(params), function () {
                     console.log("Successfully added.");
                 });
-                let cartNum = parseInt(cart.innerHTML)+1;
+                let cartNum = parseInt(cart.innerHTML) + 1;
                 cart.innerHTML = cartNum;
             })
         }
     }
-
 
     function updateCart(){
         let updateButtons = document.getElementsByClassName("update");
@@ -78,6 +77,7 @@ function main() {
     cartItemNumber();
     updateCart();
     removeFromCart();
+
 }
 main();
 

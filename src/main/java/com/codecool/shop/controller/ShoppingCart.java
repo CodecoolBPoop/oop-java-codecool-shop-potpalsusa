@@ -32,7 +32,7 @@ public class ShoppingCart extends HttpServlet {
         double price = 0;
 
         for (Cookie cookie: clientCookies) {
-            if (cookie.getName().length() == 1) {
+            if (cookie.getName().length() <= 3) {
                 shoppingCart.put(productDataStore.find(Integer.parseInt(cookie.getName())), Integer.parseInt(cookie.getValue()));
                 price += productDataStore.find(Integer.parseInt(cookie.getName())).getDefaultPrice() * Integer.parseInt(cookie.getValue());
             }

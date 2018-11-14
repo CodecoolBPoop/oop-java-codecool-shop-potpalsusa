@@ -109,6 +109,7 @@ public class ProductController extends HttpServlet {
 
     private int numberOfItemsInCart(Cookie clientCookies[]){
         int itemNum = 0;
+        if(clientCookies == null) return itemNum;
         for(Cookie cookie : clientCookies){
             if(cookie.getName().length() <= 3){
                 itemNum += Integer.parseInt(cookie.getValue());

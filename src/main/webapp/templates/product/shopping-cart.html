@@ -5,9 +5,10 @@
     <meta name="author" content="Codecool" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Codecool Shop</title>
+    <title>Codecool Shop - Cart</title>
     <!-- Font Awesome Icon -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
 
     <!-- Latest compiled and minified Jquery -->
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"
@@ -26,8 +27,6 @@
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
 
-    <script type="text/javascript" th:src="@{/static/js/the_js.js}" defer></script>
-
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
 </head>
 
@@ -35,40 +34,39 @@
 
 <div class="jumbotron text-center">
     <h1>Codecool Shop</h1>
-    <div class="shopping-cart-button">
-      <i class="fa fa-shopping-cart fa-3x"></i>
-      <a href="/shopping-cart" id="cart" th:attr="name=${numOfItems}" th:text="${numOfItems}">Shopping Cart</a>
-    </div>
-</div>
 
-<div th:replace="footer.html :: copy"></div>
+    <h2>Your cart</h2>
+</div>
 
 <div class="container">
     <div class="well well-sm">
-        <form   id= "myForm" action="#" th:action="@{/suppliers.html}"   method='GET' >
-        <h4>SUPPLIER</h4>
-        <select >
-            <option th:each= "supp,iterStat : ${supplier}" th:text="${supp.name}" th:value="${supp.id}" ></option>
-        </select>
-
-            <input name = "submit" type="submit" value="Submit">
-
-        </form>
+        <strong>The content of your cart:</strong>
     </div>
+
     <div id="products" class="row list-group">
 
-        <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${products}">
+        <div class="item col-xs-4 col-lg-4" th:each="prod : ${cart}">
             <div class="thumbnail">
-                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
                 <div class="caption">
-                    <h4 class="group inner list-group-item-heading" th:text="${prod.name}">Product name</h4>
+                    <h4 class="group inner list-group-item-heading" th:text="${prod.key.getName()}">Product name</h4>
                     <p class="group inner list-group-item-text" th:text="${prod.description}">Product description... </p>
                     <div class="row">
+                        <form action="/shopping-cart">
+                            <div class="col-xs-12 col-md-6">
+                                Quantity: <input type="text" name="quantity" value="" size="6" th:text="${prod.value}">
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <input class="btn btn-primary" id="center" type="submit" value="Update my cart!">
+                                <p></p>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row">
                         <div class="col-xs-12 col-md-6">
-                            <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+                            <p class="lead" th:text="${prod.key.getDefaultPrice()} + ' USD'">100 USD</p>
                         </div>
                         <div class="col-xs-12 col-md-6">
-                            <input type="button" th:attr="name=${prod.id}" value="Add to cart" class="add btn btn-success">
+                            <button class="btn btn-danger" type="submit" name="removefromcart" value="">Remove from cart</button>
                         </div>
                     </div>
                 </div>
@@ -76,7 +74,17 @@
         </div>
     </div>
 
+    <div class="well well-sm">
+        <strong>Total: th:text="${total} + ' USD'"</strong>
+        <span class="rightside"><a href="/checkout"><button class="btn btn-success" th:align="right" >Checkout</button></a></span>
+    </div>
+
+
+
+
 </div>
+
+<div th:replace="footer.html :: copy"></div>
 
 </body>
 </html>

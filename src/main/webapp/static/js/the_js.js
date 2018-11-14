@@ -16,6 +16,68 @@ function main() {
             })
         }
     }
+
+    function updateCart(){
+        let updateButtons = document.getElementsByClassName("update");
+
+        for(let button of updateButtons){
+            button.addEventListener("click", function () {
+                let productId = button.getAttribute("name");
+                let originalNum = document.getElementById(productId).getAttribute("value");
+                let productNum = $("#" + productId).val();
+                if (parseInt(productNum) < 0 || isNaN(productNum)){
+                    productNum = originalNum;
+                    $("#" + productId).val(originalNum);
+                }
+
+                let params = {itemId : productId, quantity : productNum};
+                $.post('/shopping-cart', $.param(params), function () {
+                    console.log("Successfully POST method.");
+                    recalculateTotal();
+                });
+            })
+
+        }
+    }
+
+    function recalculateTotal(){
+        let prices = document.getElementsByClassName("price");
+        let total = document.getElementById("total");
+        let newTotal = 0;
+
+        let cookies = document.cookie.split(";");
+        for(let cookie of cookies){
+            let splittedCookie = cookie.split("=");
+            let cookieItemId = splittedCookie[0].trim();
+            let quantity = parseInt(splittedCookie[1]);
+            for(let price of prices){
+                if(price.getAttribute("name") == cookieItemId){
+                    newTotal += (quantity * (parseFloat(price.getAttribute("value"))));
+                }
+            }
+        }
+        let outPut = "Total: " + newTotal + " USD";
+        total.innerHTML = outPut;
+    }
+
+    function removeFromCart(){
+        let removeButtons = document.getElementsByClassName("remove");
+        for(let button of removeButtons){
+            button.addEventListener("click", function () {
+                let itemId = button.getAttribute("name");
+                document.cookie = itemId + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+                let item = document.getElementById("item" + itemId);
+                item.parentElement.removeChild(item);
+                recalculateTotal();
+            })
+        }
+    }
+
+
+    cartItemNumber();
+    updateCart();
+    removeFromCart();
+
 }
 main();
 

@@ -42,17 +42,15 @@ public class ProductController extends HttpServlet {
         if (itemCategory != null) {
             params.put("products",
                     productDataStore.getBy(productCategoryDataStore.find(Integer.parseInt(itemCategory))));
-            System.out.println(itemCategory);
         }
 
 
         int itemNum = numberOfItemsInCart(clientCookies);
         String supplierId = req.getParameter("supplier");
-        if (supplierId!=null){
+        if (supplierId != null){
             params.put("products", productDataStore.getBy(supplierDataStore.find(Integer.parseInt(supplierId))));
         }
 
-        System.out.println(supplierId);
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
@@ -114,6 +112,7 @@ public class ProductController extends HttpServlet {
 
     private boolean itemInCart(String id, Cookie clientCookies[]) {
         boolean itemInCart = false;
+        if(clientCookies == null) return itemInCart;
         for (Cookie cookie : clientCookies) {
             if (id.equals(cookie.getName())) {
                 itemInCart = true;

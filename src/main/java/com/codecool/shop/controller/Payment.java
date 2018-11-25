@@ -37,13 +37,31 @@ public class Payment extends HttpServlet {
         engine.process("product/payment.html", context, resp.getWriter());
 
     }
-}
 
-   /* @Override
+
+   @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        Enumeration personalInfo = req.getParameterNames();
+        //TODO: retrieve data if credit card,and if paypal
+       while(personalInfo.hasMoreElements())
+       {
+           Object obj = personalInfo.nextElement();
+           String fieldName = (String) obj;
+           String fieldValue = req.getParameter(fieldName);
+           System.out.println(fieldName + " : " + fieldValue + "<br>");
+       }
+
+
+
+       // TODO: redirecting where?
+
+       TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
+       WebContext context = new WebContext(req, resp, req.getServletContext());
+       engine.process("product/payment.html", context, resp.getWriter());
 
 
     }
 
 
-}*/
+}

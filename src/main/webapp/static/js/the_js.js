@@ -14,6 +14,7 @@ function main() {
                 let cartNum = parseInt(cart.innerHTML) + 1;
                 cart.innerHTML = cartNum;
             })
+
         }
     }
 
@@ -36,6 +37,7 @@ function main() {
                 $.post('/shopping-cart', $.param(params), function () {
                     console.log("Successfully POST method.");
                     recalculateTotal();
+
                 });
             })
 
@@ -60,6 +62,8 @@ function main() {
         }
         let outPut = "Total: " + newTotal + " USD";
         total.innerHTML = outPut;
+
+
     }
 
     function removeFromCart(){
@@ -71,6 +75,7 @@ function main() {
                 let item = document.getElementById("item" + itemId);
                 item.parentElement.removeChild(item);
                 recalculateTotal();
+
             })
         }
     }
@@ -79,11 +84,40 @@ function main() {
         document.cookie = itemId + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
         let item = document.getElementById("item" + itemId);
         item.parentElement.removeChild(item);
+
     }
+
+    function postTotalPayment() {
+
+        if (document.getElementById("for-payment") != null)
+        {
+            let postButton = document.getElementById("for-payment");
+            postButton.addEventListener("click", function () {
+
+                let total = document.getElementById("total").innerHTML;
+                localStorage.setItem("total", total);
+
+            })
+
+        }
+    }
+    function getTotalPayment(){
+        if (document.getElementById("total-payment") !=null){
+            window.onload = getTotal;
+            function getTotal() {
+                document.getElementById("total-payment").innerHTML= localStorage.getItem("total");
+            }
+        }
+    }
+
 
     cartItemNumber();
     updateCart();
     removeFromCart();
+    postTotalPayment();
+    getTotalPayment();
+
+
 
 }
 main();

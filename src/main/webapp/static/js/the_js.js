@@ -28,6 +28,8 @@ function main() {
                 if (parseInt(productNum) < 0 || isNaN(productNum)){
                     productNum = originalNum;
                     $("#" + productId).val(originalNum);
+                } else if(parseInt(productNum) === 0){
+                    removeFromCartToZero(productId);
                 }
 
                 let params = {itemId : productId, quantity : productNum};
@@ -73,6 +75,11 @@ function main() {
         }
     }
 
+    function removeFromCartToZero(itemId){
+        document.cookie = itemId + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        let item = document.getElementById("item" + itemId);
+        item.parentElement.removeChild(item);
+    }
 
     cartItemNumber();
     updateCart();

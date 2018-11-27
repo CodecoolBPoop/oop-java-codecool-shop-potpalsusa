@@ -112,6 +112,4 @@ public class Order {
         this.shippingAddress = shippingAddress;
     }
 
-
-
 }

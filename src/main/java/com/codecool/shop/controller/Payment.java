@@ -21,42 +21,47 @@ import java.util.List;
 import java.util.Map;
 
 
-@WebServlet(urlPatterns = {"/checkout"})
-public class Checkout extends HttpServlet {
+@WebServlet(urlPatterns = {"/payment"})
+public class Payment extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String paymentChoice = req.getParameter("payment-choice");
+        System.out.println(paymentChoice);
+
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
-        engine.process("product/checkout.html", context, resp.getWriter());
+        context.setVariable("paymentChoice", paymentChoice);
+        //context.setVariable("total", ShoppingCart.total);
+        engine.process("product/payment.html", context, resp.getWriter());
 
     }
 
-    @Override
+
+   @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        Order oderInfo = new Order();
+        Enumeration personalInfo = req.getParameterNames();
+        //TODO: retrieve data if credit card,and if paypal
+       while(personalInfo.hasMoreElements())
+       {
+           Object obj = personalInfo.nextElement();
+           String fieldName = (String) obj;
+           String fieldValue = req.getParameter(fieldName);
+           System.out.println(fieldName + " : " + fieldValue + "<br>");
+       }
 
-        // TODO: 11/14/18 put posted info in orderInfo
-        Enumeration<String> personalInfo = req.getParameterNames();
-        while (personalInfo.hasMoreElements()) {
-            String param = personalInfo.nextElement();
-            System.out.println(param);
-            String value = req.getParameter(param);
-            System.out.println(value);
-        }
 
-        // TODO: 11/14/18 redirecting
-        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
-        WebContext context = new WebContext(req, resp, req.getServletContext());
 
-        //engine.process("product/payment.html", context, resp.getWriter());
+       // TODO: redirecting where?
+
+       TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
+       WebContext context = new WebContext(req, resp, req.getServletContext());
+       engine.process("product/payment.html", context, resp.getWriter());
 
 
     }
 
 
 }
-
-

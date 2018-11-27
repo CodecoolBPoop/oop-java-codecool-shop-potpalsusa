@@ -48,6 +48,10 @@ public class Checkout extends HttpServlet {
         }
 
         // TODO: 11/14/18 redirecting
+        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
+        WebContext context = new WebContext(req, resp, req.getServletContext());
+
+        //engine.process("product/payment.html", context, resp.getWriter());
 
 
     }

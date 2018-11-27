@@ -32,25 +32,13 @@ public class ProductController extends HttpServlet {
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
 
-        Map params = new HashMap<>();
-        params.put("category", productCategoryDataStore.find(1));
-        params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
+        Map params = initDefaultData(productDataStore, productCategoryDataStore);
 
         Cookie clientCookies[] = req.getCookies();
 
-        String itemCategory = req.getParameter("productCategory");
-        if (itemCategory != null) {
-            params.put("products",
-                    productDataStore.getBy(productCategoryDataStore.find(Integer.parseInt(itemCategory))));
-        }
-
+        changeFilter(req, productDataStore, productCategoryDataStore, supplierDataStore, params);
 
         int itemNum = numberOfItemsInCart(clientCookies);
-        String supplierId = req.getParameter("supplier");
-        if (supplierId != null){
-            params.put("products", productDataStore.getBy(supplierDataStore.find(Integer.parseInt(supplierId))));
-        }
-
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
@@ -59,6 +47,26 @@ public class ProductController extends HttpServlet {
         context.setVariable("recipient", "World");
         context.setVariable("supplier", supplierDataStore.getAll());
         engine.process("product/index.html", context, resp.getWriter());
+    }
+
+    private void changeFilter(HttpServletRequest req, ProductDao productDataStore, ProductCategoryDao productCategoryDataStore, SupplierDao supplierDataStore, Map params) {
+        String itemCategory = req.getParameter("productCategory");
+        if (itemCategory != null) {
+            params.put("products",
+                    productDataStore.getBy(productCategoryDataStore.find(Integer.parseInt(itemCategory))));
+        }
+
+        String supplierId = req.getParameter("supplier");
+        if (supplierId != null) {
+            params.put("products", productDataStore.getBy(supplierDataStore.find(Integer.parseInt(supplierId))));
+        }
+    }
+
+    private Map initDefaultData(ProductDao productDataStore, ProductCategoryDao productCategoryDataStore) {
+        Map params = new HashMap<>();
+        params.put("category", productCategoryDataStore.find(1));
+        params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
+        return params;
     }
 
     @Override
@@ -109,7 +117,7 @@ public class ProductController extends HttpServlet {
 
     private boolean itemInCart(String id, Cookie clientCookies[]) {
         boolean itemInCart = false;
-        if(clientCookies == null) return itemInCart;
+        if (clientCookies == null) return itemInCart;
         for (Cookie cookie : clientCookies) {
             if (id.equals(cookie.getName())) {
                 itemInCart = true;
@@ -129,5 +137,4 @@ public class ProductController extends HttpServlet {
         }
         return itemNum;
     }
-
 }

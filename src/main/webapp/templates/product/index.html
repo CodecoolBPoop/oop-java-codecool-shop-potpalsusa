@@ -76,7 +76,7 @@
                 Supplier <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" name="supplier">
-                <th:block th:each="supp,iterStat : ${supplier}">
+                <th:block th:each="supp, iterstat: ${supplier}">
                     <form action="/">
                         <li>
                             <button name="supplier" type="submit" class="supplierSelection btn btn-default" th:text="${supp.name}"
@@ -90,7 +90,10 @@
     </div>
     <div id="products" class="row list-group">
 
-        <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${products}">
+        <div class="item col-xs-4 col-lg-4" th:each="prod : ${products}">
+            <!--<p th:text="${prod}"></p>-->
+            <p th:text="${prod.id}"></p>
+            <p th:text="${prod.name}"></p>
             <div class="thumbnail">
                 <img class="group list-group-image" src="http://placehold.it/400x250/000/fff"
                      th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt=""/>

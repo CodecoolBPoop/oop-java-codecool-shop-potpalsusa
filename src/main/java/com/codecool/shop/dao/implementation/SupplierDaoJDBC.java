@@ -7,24 +7,19 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SupplierDaoWithJDBC implements SupplierDao {
-
-    private static final String DATABASE = " ";
-    private static final String DB_USER = " ";
-    private static final String DB_PASSWORD = " ";
-
+public class SupplierDaoJDBC extends ConnectionCreater implements SupplierDao {
 
     private List<Supplier> data = new ArrayList<>();
-    private static SupplierDaoWithJDBC instance = null;
+    private static SupplierDaoJDBC instance = null;
 
     /* A private Constructor prevents any other class from instantiating.
      */
-    private SupplierDaoWithJDBC() {
+    private SupplierDaoJDBC() {
     }
 
-    public static SupplierDaoWithJDBC getInstance() {
+    public static SupplierDaoJDBC getInstance() {
         if (instance == null) {
-            instance = new SupplierDaoWithJDBC();
+            instance = new SupplierDaoJDBC();
         }
         return instance;
     }
@@ -32,10 +27,11 @@ public class SupplierDaoWithJDBC implements SupplierDao {
     @Override
     public void add(Supplier supplier) {
 
-        try (Connection connection = getConnection();
-             PreparedStatement addNewSupplier = connection.prepareStatement(
-                     "INSERT INTO Supplier ( name, description) VALUES ( ?, ?);")
-        ){
+        try {
+            Connection connection = getConnection();
+            PreparedStatement addNewSupplier = connection.prepareStatement(
+                     "INSERT INTO supplier (supplier_name, description) VALUES ( ?, ?);");
+
             addNewSupplier.setString(1, supplier.getName());
             addNewSupplier.setString(2, supplier.getDescription());
             addNewSupplier.execute();
@@ -48,7 +44,7 @@ public class SupplierDaoWithJDBC implements SupplierDao {
     @Override
     public Supplier find(int id) {
 
-        String query = "SELECT * FROM webshop WHERE id ='" + id + "';";
+        String query = "SELECT * FROM supplier WHERE id ='" + id + "';";
 
         try (Connection connection = getConnection();
              Statement statement =connection.createStatement();
@@ -56,12 +52,9 @@ public class SupplierDaoWithJDBC implements SupplierDao {
         ){
             if (resultSet.next()){
                 Supplier result = new Supplier(resultSet.getString("id"),
-                        resultSet.getString("name"));
+                        resultSet.getString("supplier_name"));
                 return result;
-            } else {
-                return null;
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -81,7 +74,7 @@ public class SupplierDaoWithJDBC implements SupplierDao {
     @Override
     public List<Supplier> getAll() {
 
-        String query = "SELECT * FROM Supplier;";
+        String query = "SELECT * FROM supplier;";
 
         List<Supplier> resultList = new ArrayList<>();
 
@@ -90,11 +83,12 @@ public class SupplierDaoWithJDBC implements SupplierDao {
              ResultSet resultSet = statement.executeQuery(query);
         ){
             while (resultSet.next()){
-                Supplier actTodo = new Supplier(resultSet.getString("id"),
-                        resultSet.getString("name"));
+                Supplier actTodo = new Supplier(
+                        resultSet.getInt("id"),
+                        resultSet.getString("supplier_name"),
+                        resultSet.getString("description"));
                 resultList.add(actTodo);
             }
-
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -103,24 +97,6 @@ public class SupplierDaoWithJDBC implements SupplierDao {
         return resultList;
     }
 
-
-    private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(
-                DATABASE,
-                DB_USER,
-                DB_PASSWORD);
-    }
-
-    private void executeQuery(String query) {
-        try (Connection connection = getConnection();
-             Statement statement =connection.createStatement();
-        ){
-            statement.execute(query);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }
 
 

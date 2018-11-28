@@ -54,6 +54,7 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
         ){
             while (resultSet.next()) {
                 ProductCategory productCategory = new ProductCategory(
+                        resultSet.getInt("id"),
                         resultSet.getString("name"),
                         resultSet.getString("department"),
                         resultSet.getString("description"));
@@ -86,6 +87,7 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
         ) {
             while (resultSet.next()) {
                 ProductCategory productCategory = new ProductCategory(
+                        resultSet.getInt("id"),
                         resultSet.getString("name"),
                         resultSet.getString("department"),
                         resultSet.getString("description"));

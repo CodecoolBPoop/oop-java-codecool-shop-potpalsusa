@@ -59,10 +59,11 @@
                 Category <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" name="productCategory">
-                <th:block th:each=" category,iterStat : ${category}">
+                <th:block th:each=" categori,iterStat : ${category}">
                     <form action="/">
-                        <li><button  name="productCategory" type="submit" th:name="category" th:text="${category.name}"
-                                     class="categorySelection" th:value="${category.id}">Action</button>
+                        <li>
+                            <button name="productCategory" type="submit" th:name="categori" th:text="${categori.name}"
+                                     class="categorySelection btn btn-default" th:value="${categori.id}"></button>
                         </li>
                     </form>
                 </th:block>
@@ -77,8 +78,9 @@
             <ul class="dropdown-menu" name="supplier">
                 <th:block th:each="supp,iterStat : ${supplier}">
                     <form action="/">
-                        <li><button name="supplier" type="submit" class="categorySelection" th:text="${supp.name}"
-                                    th:value="${supp.id}">Action</button>
+                        <li>
+                            <button name="supplier" type="submit" class="supplierSelection btn btn-default" th:text="${supp.name}"
+                                    th:value="${supp.id}"></button>
                         </li>
                     </form>
                 </th:block>

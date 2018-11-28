@@ -38,15 +38,17 @@
 
 <div class="jumbotron text-center">
     <h1>Codecool Shop</h1>
-    <div class="shopping-cart-button">
-        <a href="/shopping-cart"><i class="fa fa-shopping-cart fa-3x"></i></a>
-        <p id="cart" th:attr="name=${numOfItems}" th:text="${numOfItems}"></p>
-
-    </div>
 </div>
-
-
 <div class="container">
+    <div class="row shopping-cart-button" th:align="right">
+        <form action="/shopping-cart">
+            <button class="btn btn-success" type="submit">
+                <i class="fa fa-shopping-cart fa-2x cart"></i>  Shopping Cart
+                <span class="badge" id="cart" th:attr="name=${numOfItems}" th:text="${numOfItems}">4</span>
+            </button>
+        </form>
+    </div>
+    <br>
     <div class="well well-sm">
         <div>
         <strong>Category:</strong>

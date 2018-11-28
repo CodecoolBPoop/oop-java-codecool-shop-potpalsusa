@@ -42,16 +42,16 @@ public class Checkout extends HttpServlet {
         Enumeration<String> personalInfo = req.getParameterNames();
         while (personalInfo.hasMoreElements()) {
             String param = personalInfo.nextElement();
-            System.out.println(param);
+            //System.out.println(param);
             String value = req.getParameter(param);
-            System.out.println(value);
+            //System.out.println(value);
         }
 
         // TODO: 11/14/18 redirecting
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
-        //engine.process("product/payment.html", context, resp.getWriter());
+        engine.process("product/payment.html", context, resp.getWriter());
 
 
     }

@@ -52,8 +52,7 @@ public class ProductController extends HttpServlet {
     private void changeFilter(HttpServletRequest req, ProductDao productDataStore, ProductCategoryDao productCategoryDataStore, SupplierDao supplierDataStore, Map params) {
         String itemCategory = req.getParameter("productCategory");
         if (itemCategory != null) {
-            params.put("products",
-                    productDataStore.getBy(productCategoryDataStore.find(Integer.parseInt(itemCategory))));
+            params.put("products", productDataStore.getBy(productCategoryDataStore.find(Integer.parseInt(itemCategory))));
         }
 
         String supplierId = req.getParameter("supplier");

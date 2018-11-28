@@ -9,9 +9,9 @@ import java.util.List;
 
 public class SupplierDaoWithJDBC implements SupplierDao {
 
-    private static final String DATABASE = "jdbc:postgresql://localhost:5432/todolist";
-    private static final String DB_USER = "noemi";
-    private static final String DB_PASSWORD = "Finally over";
+    private static final String DATABASE = " ";
+    private static final String DB_USER = " ";
+    private static final String DB_PASSWORD = " ";
 
 
     private List<Supplier> data = new ArrayList<>();
@@ -32,9 +32,16 @@ public class SupplierDaoWithJDBC implements SupplierDao {
     @Override
     public void add(Supplier supplier) {
 
-        String query = "INSERT INTO webshop (id, name, description) " +
-                "VALUES ('" + supplier.getId() + "', '" + supplier.getName() + "', '" + supplier.getDescription() + "');";
-        executeQuery(query);
+        try (Connection connection = getConnection();
+             PreparedStatement addNewSupplier = connection.prepareStatement(
+                     "INSERT INTO Supplier ( name, description) VALUES ( ?, ?);")
+        ){
+            addNewSupplier.setString(1, supplier.getName());
+            addNewSupplier.setString(2, supplier.getDescription());
+            addNewSupplier.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -66,7 +73,7 @@ public class SupplierDaoWithJDBC implements SupplierDao {
     @Override
     public void remove(int id) {
 
-        String query = "DELETE FROM webshop WHERE id = '" + id +"';";
+        String query = "DELETE FROM Supplier WHERE id = '" + id +"';";
         executeQuery(query);
 
     }
@@ -74,7 +81,7 @@ public class SupplierDaoWithJDBC implements SupplierDao {
     @Override
     public List<Supplier> getAll() {
 
-        String query = "SELECT * FROM webshop;";
+        String query = "SELECT * FROM Supplier;";
 
         List<Supplier> resultList = new ArrayList<>();
 

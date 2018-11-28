@@ -32,6 +32,8 @@ public class ProductController extends HttpServlet {
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
 
+
+
         Map params = initDefaultData(productDataStore, productCategoryDataStore);
 
         Cookie clientCookies[] = req.getCookies();

@@ -49,28 +49,40 @@
         </form>
     </div>
     <br>
+
+
+
     <div class="well well-sm">
-        <div>
-        <strong>Category:</strong>
-        <form action="/">
-            <select name="productCategory">
-                <option th:each=" category,iterStat : ${category}" th:name="category" th:text="${category.name}"
-                        class="categorySelection" th:value="${category.id}"></option>
-            </select>
-            <input class="btn btn-success" type="submit" value="submit"></input>
-        </form>
+        <!-- Category button -->
+        <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Category <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" name="productCategory">
+                <th:block th:each=" category,iterStat : ${category}">
+                    <form action="/">
+                        <li><button  name="productCategory" type="submit" th:name="category" th:text="${category.name}"
+                                     class="categorySelection" th:value="${category.id}">Action</button>
+                        </li>
+                    </form>
+                </th:block>
+            </ul>
         </div>
 
-        <div>
-        <strong>Supplier:</strong>
-        <form id="suppForm" action="/">
-            <select name="supplier">
-                <option class="select" th:each="supp,iterStat : ${supplier}" th:text="${supp.name}"
-                        th:value="${supp.id}"
-                ></option>
-            </select>
-            <input class="btn btn-success" type="submit" value="submit">
-        </form>
+        <!-- Supplier button -->
+        <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Supplier <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" name="supplier">
+                <th:block th:each="supp,iterStat : ${supplier}">
+                    <form action="/">
+                        <li><button name="supplier" type="submit" class="categorySelection" th:text="${supp.name}"
+                                    th:value="${supp.id}">Action</button>
+                        </li>
+                    </form>
+                </th:block>
+            </ul>
         </div>
 
     </div>

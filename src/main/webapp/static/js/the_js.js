@@ -60,10 +60,9 @@ function main() {
                 }
             }
         }
+        newTotal = parseFloat(newTotal);
         let outPut = "Total: " + newTotal + " USD";
         total.innerHTML = outPut;
-
-
     }
 
     function removeFromCart(){
@@ -84,7 +83,6 @@ function main() {
         document.cookie = itemId + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
         let item = document.getElementById("item" + itemId);
         item.parentElement.removeChild(item);
-
     }
 
     function postTotalPayment() {
@@ -98,7 +96,6 @@ function main() {
                 localStorage.setItem("total", total);
 
             })
-
         }
     }
     function getTotalPayment(){
@@ -109,7 +106,6 @@ function main() {
             }
         }
     }
-
 
     cartItemNumber();
     updateCart();

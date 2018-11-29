@@ -8,7 +8,7 @@ import java.sql.Statement;
 public class ConnectionCreater {
     protected static final String DATABASE = "jdbc:postgresql://localhost:5432/webshop";
     protected static final String DB_USER = "gabor";
-    protected static final String DB_PASSWORD = "OdTemDar85xx";
+    protected static final String DB_PASSWORD = "";
 
     protected Connection getConnection() throws SQLException {
         return DriverManager.getConnection(

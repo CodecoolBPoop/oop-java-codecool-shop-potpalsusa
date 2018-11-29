@@ -126,12 +126,28 @@ function main() {
         }
     }
 
+    function notoifycation(){
+        let shopingCart = document.getElementById("shopping-cart-notify");
+        let shoppingCartAdd = document.getElementsByClassName("add");
+
+        for(let addButton of shoppingCartAdd) {
+            addButton.addEventListener('click', function () {
+                $.notify.defaults({className: "success"});
+                $(shopingCart).notify(
+                    "Item added!",
+                    {position: "right"}
+                );
+            })
+        }
+    }
+
     cartItemNumber();
     updateCart();
     removeFromCart();
     postTotalPayment();
     getTotalPayment();
     finishPayment();
+    notoifycation()
 
 }
 main();

@@ -36,7 +36,7 @@ CREATE TABLE "Supplier" (
 
 
 
-ALTER TABLE "ProductCategory" ADD CONSTRAINT "ProductCategory_fk0" FOREIGN KEY ("id") REFERENCES "Product"("productCategoryId");
+ALTER TABLE product_category ADD CONSTRAINT "ProductCategory_fk0" FOREIGN KEY ("id") REFERENCES product(product_category_id);
 
-ALTER TABLE "Supplier" ADD CONSTRAINT "Supplier_fk0" FOREIGN KEY ("id") REFERENCES "Product"("supplierId");
+ALTER TABLE supplier ADD CONSTRAINT "Supplier_fk0" FOREIGN KEY ("id") REFERENCES product(supplier_id);
 

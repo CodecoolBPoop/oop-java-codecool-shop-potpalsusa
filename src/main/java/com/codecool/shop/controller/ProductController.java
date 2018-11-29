@@ -3,10 +3,10 @@ package com.codecool.shop.controller;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.model.Product;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.util.NumberUtils;
@@ -26,13 +26,12 @@ import java.util.Map;
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
 
+    private ProductDao productDataStore = ProductDaoJDBC.getInstance();
+    private ProductCategoryDao productCategoryDataStore = ProductCategoryDaoJDBC.getInstance();
+    private SupplierDao supplierDataStore = SupplierDaoJDBC.getInstance();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
-
-
 
         Map params = initDefaultData(productDataStore, productCategoryDataStore);
 
@@ -65,16 +64,13 @@ public class ProductController extends HttpServlet {
 
     private Map initDefaultData(ProductDao productDataStore, ProductCategoryDao productCategoryDataStore) {
         Map params = new HashMap<>();
-        params.put("category", productCategoryDataStore.find(1));
-        params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
+        params.put("category", productCategoryDataStore.find(10));
+        params.put("products", productDataStore.getBy(productCategoryDataStore.find(10)));
         return params;
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
 
         Cookie clientCookies[] = req.getCookies();
 
@@ -110,7 +106,7 @@ public class ProductController extends HttpServlet {
 
         context.setVariable("category", productCategoryDataStore.getAll());
 
-        context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(1)));
+        context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(10)));
         context.setVariable("categories", productCategoryDataStore.getAll());
         engine.process("product/index.html", context, resp.getWriter());
 

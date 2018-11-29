@@ -29,6 +29,7 @@
 
 
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+    <script type="text/javascript" th:src="@{/static/js/the_js.js}" defer></script>
 </head>
 
 <body>
@@ -38,11 +39,11 @@
 
     <h2>Payment</h2>
 </div>
-<div class="well well-sm">
-    <strong id="total-payment">Total:</strong>
-</div>
 
 <div class="container">
+    <div class="well well-sm">
+        <strong id="total-payment">Total:</strong>
+    </div>
     <div class="well well-sm">
         <strong>Choose payment:</strong>
     </div>
@@ -53,8 +54,9 @@
     </form>
 
 
-    <div class="container" th:switch="${paymentChoice}" >
+    <div th:switch="${paymentChoice}" >
         <div  th:case = "${'credit-card'}">
+            <br>
             <div class="well well-sm">
                 <strong>Please provide credit card information:</strong>
             </div>
@@ -80,6 +82,7 @@
         </form>
     </div>
         <div  th:case = "${'paypal'}">
+            <br>
             <div class="well well-sm">
                 <strong>Please provide :</strong>
             </div>
@@ -100,7 +103,8 @@
 
 </div>
 
+<br>
+
 <div th:replace="footer.html :: copy"></div>
-<script type="text/javascript" th:src="@{/static/js/the_js.js}" defer></script>
 </body>
 </html>

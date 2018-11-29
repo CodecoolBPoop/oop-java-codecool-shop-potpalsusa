@@ -4,6 +4,7 @@ import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
+import com.codecool.shop.dao.implementation.ProductDaoJDBC;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.model.Product;
 import org.thymeleaf.TemplateEngine;
@@ -24,11 +25,13 @@ import java.util.Map;
 @WebServlet(urlPatterns = {"/shopping-cart"})
 public class ShoppingCart extends HttpServlet {
 
+    private ProductDao productDataStore = ProductDaoJDBC.getInstance();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Map<Product, Integer> shoppingCart = new HashMap<>();
 
-        ProductDao productDataStore = ProductDaoMem.getInstance();
+
         Cookie clientCookies[] = req.getCookies();
 
         double price = 0;
@@ -58,7 +61,6 @@ public class ShoppingCart extends HttpServlet {
 
         Map<Product, Integer> shoppingCart = new HashMap<>();
 
-        ProductDao productDataStore = ProductDaoMem.getInstance();
         Cookie clientCookies[] = req.getCookies();
 
         String itemId = req.getParameter("itemId");

@@ -142,6 +142,7 @@ public class ProductDaoJDBC extends ConnectionCreater implements ProductDao {
         int suppId = getSupplierId(supplier);
         List<Product> productsById= new ArrayList<>();
         String query = "SELECT * FROM product WHERE supplier_id = " + suppId + ";";
+
         try (Connection connection = getConnection();
              Statement getProductsBySupplier = connection.createStatement();
              ResultSet resultSet = getProductsBySupplier.executeQuery(query)
@@ -157,8 +158,6 @@ public class ProductDaoJDBC extends ConnectionCreater implements ProductDao {
                         supplierDaoDataStore.find(Integer.parseInt(resultSet.getString("supplier_id"))));
                 productsById.add(product);
             }
-
-
         } catch (SQLException e) {
             e.printStackTrace();
         }

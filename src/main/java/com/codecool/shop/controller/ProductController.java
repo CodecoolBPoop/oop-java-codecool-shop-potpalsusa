@@ -5,6 +5,7 @@ import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.model.Product;
 import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -65,7 +66,7 @@ public class ProductController extends HttpServlet {
         Map params = new HashMap<>();
         params.put("category", productCategoryDataStore.find(10));
         params.put("products", productDataStore.getBy(productCategoryDataStore.find(10)));
-        System.out.println(productDataStore.getBy(productCategoryDataStore.find(10)));
+        List<Product> products = productDataStore.getBy(productCategoryDataStore.find(10));
         return params;
     }
 

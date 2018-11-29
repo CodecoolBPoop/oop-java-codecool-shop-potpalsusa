@@ -66,7 +66,6 @@ public class ProductController extends HttpServlet {
         Map params = new HashMap<>();
         params.put("category", productCategoryDataStore.find(10));
         params.put("products", productDataStore.getBy(productCategoryDataStore.find(10)));
-        List<Product> products = productDataStore.getBy(productCategoryDataStore.find(10));
         return params;
     }
 

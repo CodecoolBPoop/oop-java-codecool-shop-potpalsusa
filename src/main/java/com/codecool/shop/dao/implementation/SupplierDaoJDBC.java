@@ -51,8 +51,10 @@ public class SupplierDaoJDBC extends ConnectionCreater implements SupplierDao {
              ResultSet resultSet = statement.executeQuery(query);
         ){
             if (resultSet.next()){
-                Supplier result = new Supplier(resultSet.getString("id"),
-                        resultSet.getString("supplier_name"));
+                Supplier result = new Supplier(
+                        resultSet.getInt("id"),
+                        resultSet.getString("supplier_name"),
+                        resultSet.getString("description"));
                 return result;
             }
         } catch (SQLException e) {

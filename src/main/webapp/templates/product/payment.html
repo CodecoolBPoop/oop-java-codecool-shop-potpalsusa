@@ -60,7 +60,7 @@
             <div class="well well-sm">
                 <strong>Please provide credit card information:</strong>
             </div>
-        <form action="/payment" method="post">
+        <form action="/">
             <div>
                 <p>Card number:</p>
                 <input type="text" name="card-number" required>
@@ -78,7 +78,7 @@
                 <input type="text" name="code" required>
             </div>
 
-            <input class="btn btn-success"  name="credit-card" type="submit" value="Payment">
+            <input class="payment-button btn btn-success"  name="credit-card" type="submit" value="Payment">
         </form>
     </div>
         <div  th:case = "${'paypal'}">
@@ -86,7 +86,7 @@
             <div class="well well-sm">
                 <strong>Please provide :</strong>
             </div>
-        <form action="/payment" method="post">
+        <form action="/">
             <div>
                 <p>Username:</p>
                 <input type="text" name="username" required>
@@ -95,8 +95,8 @@
                 <p>password:</p>
                 <input type="text" name="password" required>
             </div>
-
-            <input class="btn btn-success"  name="paypal" type="submit" value="Payment">
+            <br>
+            <input class="payment-button btn btn-success" name="paypal" type="submit" value="Payment">
         </form>
         </div>
     </div>

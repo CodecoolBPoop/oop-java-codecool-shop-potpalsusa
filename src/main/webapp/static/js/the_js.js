@@ -74,7 +74,6 @@ function main() {
                 let item = document.getElementById("item" + itemId);
                 item.parentElement.removeChild(item);
                 recalculateTotal();
-
             })
         }
     }
@@ -107,13 +106,32 @@ function main() {
         }
     }
 
+
+    function finishPayment(){
+        let paymentButtons = document.getElementsByClassName("payment-button");
+        for(let button of paymentButtons){
+            button.addEventListener("click", function () {
+                deleteItemsFromCart();
+            })
+        }
+    }
+
+    function deleteItemsFromCart() {
+        let cookies = document.cookie.split(";");
+        for (let cookie of cookies) {
+            let splittedCookie = cookie.split("=");
+            let cookieItemId = splittedCookie[0].trim();
+            document.cookie = cookieItemId + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+
+        }
+    }
+
     cartItemNumber();
     updateCart();
     removeFromCart();
     postTotalPayment();
     getTotalPayment();
-
-
+    finishPayment();
 
 }
 main();

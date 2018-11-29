@@ -1,4 +1,4 @@
-package com.codecool.shop.controller;
+package com.codecool.shop.model;
 
 public class Order {
     protected static String firstName;
@@ -14,7 +14,7 @@ public class Order {
     protected static int shippingZipCode;
     protected static String shippingAddress;
 
-    protected Order() {}
+    public Order() {}
 
     protected String getFirstName() {
         return firstName;

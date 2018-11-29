@@ -78,7 +78,8 @@
 
     <div class="well well-sm">
         <strong id="total" th:text="'Total: ' + ${total} + ' USD'"></strong>
-        <span class="rightside"><a href="/checkout"><button class="btn btn-success"  id ="for-payment" th:align="right" >Checkout</button></a></span>
+
+        <span class="rightside"><a href="/checkout"><button class="btn btn-success"  id ="for-payment" th:align="right" th:disabled="${cart.isEmpty()}">Checkout</button></a></span>
     </div>
 </div>
 

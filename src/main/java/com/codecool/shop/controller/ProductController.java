@@ -112,7 +112,7 @@ public class ProductController extends HttpServlet {
 
     }
 
-    private boolean itemInCart(String id, Cookie clientCookies[]) {
+    boolean itemInCart(String id, Cookie clientCookies[]) {
         boolean itemInCart = false;
         if (clientCookies == null) return itemInCart;
         for (Cookie cookie : clientCookies) {

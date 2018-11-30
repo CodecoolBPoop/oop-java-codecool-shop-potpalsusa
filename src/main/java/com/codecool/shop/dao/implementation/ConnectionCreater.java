@@ -17,10 +17,11 @@ public class ConnectionCreater {
                 DB_PASSWORD);
     }
 
-    protected void executeQuery(String query) {
+    protected void executeQuery(String template, Consumer<PreparedStatement> statementBuilder) {
         try (Connection connection = getConnection();
-             Statement statement =connection.createStatement();
+             PreparedStatement statement = connection.prepareStatement(template);
         ){
+            statementBuilder.accept(statement);
             statement.execute(query);
 
         } catch (SQLException e) {

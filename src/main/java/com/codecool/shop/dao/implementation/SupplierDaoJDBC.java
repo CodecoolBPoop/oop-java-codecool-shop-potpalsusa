@@ -68,8 +68,8 @@ public class SupplierDaoJDBC extends ConnectionCreater implements SupplierDao {
     @Override
     public void remove(int id) {
 
-        String query = "DELETE FROM Supplier WHERE id = '" + id +"';";
-        executeQuery(query);
+        String query = "DELETE FROM Supplier WHERE id = ?;";
+        executeQuery(query, stmt -> stmt.setParam(1, id));
 
     }
 
